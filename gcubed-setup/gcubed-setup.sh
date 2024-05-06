@@ -62,11 +62,8 @@ echo "**************************************************************************
 ls -al "${user_data_directory}"
 echo "**********************************************************************************************"
 
-echo "Creating temporary directory ("${temp_directory}")..."
-sudo sudo install -d -m 775 -o vscode -g root  "${temp_directory}"
-
 # First check for availability of user data
-enter_directory "${temp_directory}"
+enter_directory "${user_data_directory}"
 echo "Looking for user data repository at: ${user_data_repository}"
 
 GIT_TERMINAL_PROMPT=0 git ls-remote ${user_data_repository} HEAD
@@ -87,7 +84,7 @@ cat << EOF > "error-message.md"
 
 ### Instructions for doing all of this can be found at https://github.com/McKibbin-Software-Group/gcubed-2R-user-documentation#clone-data-repo
 EOF
-    code "error-message.md"
+    /bin/sh -c code "error-message.md"
     exit 1
 fi
 
@@ -103,6 +100,9 @@ git clone "${user_data_repository}" "${user_data_directory}"
 
 # copy default userdata setup & settings in. NOTE: no-clobber
 cp -r --no-clobber ${user_data_defaults_directory}/. ${user_data_directory}
+
+echo "Creating temporary directory ("${temp_directory}")..."
+sudo sudo install -d -m 775 -o vscode -g root  "${temp_directory}"
 
 echo "Pulling & installing prerequisites"
 enter_directory "${temp_directory}"
