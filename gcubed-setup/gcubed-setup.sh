@@ -86,13 +86,14 @@ cat << EOF > "${user_data_directory}/README.md"
 ###       **STOP & DELETE THIS DEVCONTAINER NOW**
 ###       **CLOSE THIS WINDOW**
 ###       **REOPEN THE MAIN REPOSITORY AT ${parent_repository}**
-###       **PRESS THE "CODE" BUTTON, SELECT "CODESPACES" TAB
+###       **PRESS THE \"CODE\" BUTTON, SELECT \"CODESPACES\" TAB
 ###       **AND DELETE THIS CODESPACE.**
 ###       **ONLY RE-CREATE THIS CODESPACE ONCE YOUR DATA REPO IS SET UP!**
 
 ### Instructions for doing all of this can be found at ${main_account_page}/gcubed-2R-user-documentation#clone-data-repo
 EOF
-    # /usr/local/bin/code "${user_data_directory}/error-message.md"
+    # vscode will open the README automatically on start
+    # exit code 0 so that the container starts & displays the error message
     exit
 fi
 
