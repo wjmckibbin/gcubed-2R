@@ -69,7 +69,7 @@ echo "Looking for user data repository at: ${user_data_repository}"
 GIT_TERMINAL_PROMPT=0 git ls-remote ${user_data_repository} HEAD
 if [ $? -ne 0 ]; then 
     echo "Error - repo not available at ${user_data_repository}"
-cat << EOF > "error-message.md"
+cat << EOF > "${user_data_repository}/error-message.md"
 # ERROR!
 
 ## User data repository not available at ${user_data_repository}!
@@ -84,7 +84,7 @@ cat << EOF > "error-message.md"
 
 ### Instructions for doing all of this can be found at https://github.com/McKibbin-Software-Group/gcubed-2R-user-documentation#clone-data-repo
 EOF
-    /bin/sh -c code "error-message.md"
+    /usr/local/bin/code "${user_data_repository}/error-message.md"
     exit 1
 fi
 
