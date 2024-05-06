@@ -42,12 +42,6 @@
 						"Metadata": "read",
 						"contents": "read"
 					}
-				},
-				"AshieSlashy/gcubed-2R-user-data": {
-					"permissions": {
-						"Metadata": "read",
-						"contents": "write"
-					}
 				}
 			}
 		}
