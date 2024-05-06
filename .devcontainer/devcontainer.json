@@ -9,6 +9,7 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
+				"terminal.integrated.inheritEnv": true,
 				"terminal.integrated.cwd": "/user_data",
 				"python.terminal.executeInFileDir": false,
 				"telemetry.telemetryLevel": "off",
