@@ -110,10 +110,20 @@ git clone "${user_data_repository}.git" "${user_data_directory}"
 # copy default userdata setup & settings in. NOTE: no-clobber
 cp -r --no-clobber ${user_data_defaults_directory}/. ${user_data_directory}
 
+
+echo "Pulling & installing prerequisites"
+
 echo "Creating temporary directory ("${temp_directory}")..."
 sudo sudo install -d -m 775 -o vscode -g root  "${temp_directory}"
 
-echo "Pulling & installing prerequisites"
+# yacc/byacc required by sym 
+# doing upfront in case the update affects any python prerequisites?
+# I'd prefer to bake byacc & the path changes into the docker image but... macOS... :/
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get clean
+sudo apt-get update
+sudo apt-get -y install byacc
+
 enter_directory "${temp_directory}"
 git clone "${prereq_repository}" "${prereq_temp_directory}"
 
@@ -141,13 +151,6 @@ for F in req*.txt; do
     pip3 install -r "$F"
     rm "$F"
 done
-
-# yacc/byacc required by sym 
-# I'd prefer to bake byacc & the path changes into the docker image but... macOS... :/
-export DEBIAN_FRONTEND=noninteractive
-sudo apt-get clean
-sudo apt-get update
-sudo apt-get -y install byacc
 
 enter_directory ".."
 git clone "${sym_repository}" "${sym_source_temp_directory}"
