@@ -45,7 +45,7 @@ echo "Current directory: ${PWD}"
 echo -e "In codespace: ${CODESPACES}\n"
 echo "Main account name: ${main_account_name}"
 echo "Main repository: ${main_repository}"
-echo -e "Data repository common name ${data_repository_common_name}\n"
+echo -e "Data repository common name: ${data_repository_common_name}\n"
 echo "User data defaults source directory: ${user_data_defaults_directory}"
 echo "Temp directory: ${temp_directory}"
 echo -e "Sym executable directory: ${sym_executable_directory}\n"
@@ -87,8 +87,9 @@ cat << EOF > "error-message.md"
 
 ### Instructions for doing all of this can be found at https://github.com/McKibbin-Software-Group/gcubed-2R-user-documentation#clone-data-repo
 EOF
-    code "error-message.md"
-    exit 1
+    # code "error-message.md"
+    # exit 1
+    read -p "Press enter to continue"
 fi
 
 # Looks like we have local user data, so start setting up...
