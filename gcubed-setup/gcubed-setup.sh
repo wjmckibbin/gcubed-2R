@@ -87,9 +87,8 @@ cat << EOF > "error-message.md"
 
 ### Instructions for doing all of this can be found at https://github.com/McKibbin-Software-Group/gcubed-2R-user-documentation#clone-data-repo
 EOF
-    # code "error-message.md"
-    # exit 1
-    read -p "Press enter to continue"
+    code "error-message.md"
+    exit 1
 fi
 
 # Looks like we have local user data, so start setting up...
