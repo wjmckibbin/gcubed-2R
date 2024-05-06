@@ -105,7 +105,7 @@ fi
 # If there are user files there already then git won't clone into that directory.
 echo "Cloning data from user repo. Git will refuse to overwrite if there are files already in this directory"
 rm "${user_data_directory}/.placeholder_semaphore_for_user_data_do_not_remove" 2> /dev/null
-git clone "${user_data_repository}" "${user_data_directory}"
+git clone "${user_data_repository}.git" "${user_data_directory}"
 
 # copy default userdata setup & settings in. NOTE: no-clobber
 cp -r --no-clobber ${user_data_defaults_directory}/. ${user_data_directory}
