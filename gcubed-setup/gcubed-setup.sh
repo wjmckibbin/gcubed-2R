@@ -32,8 +32,8 @@ done
 
 main_account_page="${GITHUB_SERVER_URL}/${main_account_name}"
 parent_repository="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
-# user_data_repository="${GITHUB_SERVER_URL}/${GITHUB_USER}/${data_repository_common_name}"
-user_data_repository="git@github.com:AshieSlashy/gcubed-2R-user-data.git"
+user_data_repository="${GITHUB_SERVER_URL}/${GITHUB_USER}/${data_repository_common_name}"
+# user_data_repository="git@github.com:AshieSlashy/gcubed-2R-user-data.git"
 
 prereq_temp_directory="${temp_directory}/$(directory_from_repo_url $prereq_repository)"
 
