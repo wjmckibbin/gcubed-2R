@@ -86,7 +86,7 @@ cat << EOF > "${user_data_directory}/README.md"
 ###       **STOP & DELETE THIS DEVCONTAINER NOW**
 ###       **CLOSE THIS WINDOW**
 ###       **REOPEN THE MAIN REPOSITORY AT ${parent_repository}**
-###       **PRESS THE \"CODE\" BUTTON, SELECT \"CODESPACES\" TAB
+###       **PRESS THE \"CODE\" BUTTON, SELECT \"CODESPACES\" TAB**
 ###       **AND DELETE THIS CODESPACE.**
 ###       **ONLY RE-CREATE THIS CODESPACE ONCE YOUR DATA REPO IS SET UP!**
 
