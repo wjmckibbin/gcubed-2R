@@ -67,6 +67,10 @@ echo "**************************************************************************
 
 # First check for availability of user data
 enter_directory "${user_data_directory}"
+
+echo "Checking to see if github.com is in known hosts"
+if [ ! "$(ssh-keygen -F github.com)" ]; then ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null; fi
+
 echo "Looking for user data repository at: ${user_data_repository}"
 
 GIT_TERMINAL_PROMPT=0 git ls-remote ${user_data_repository} HEAD
@@ -106,8 +110,6 @@ fi
 # If there are user files there already then git won't clone into that directory.
 echo "Cloning data from user repo. Git will refuse to overwrite if there are files already in this directory"
 rm "${user_data_directory}/.placeholder_semaphore_for_user_data_do_not_remove" 2> /dev/null
-
-if [ ! "$(ssh-keygen -F github.com)" ]; then ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null; fi
 git clone "${user_data_repository}" "${user_data_directory}"
 
 # copy default userdata setup & settings in. NOTE: no-clobber
