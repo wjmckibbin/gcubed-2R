@@ -4,9 +4,9 @@
 		"context": "..",
 		"dockerfile": "./Dockerfile"
 	},
-	"mounts": [
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind"
-	],
+	// "mounts": [
+	// 	"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind"
+	// ],
 	"workspaceMount": "source=${localWorkspaceFolder}/workspace/user_data,target=/user_data,type=bind",
 	"workspaceFolder":"/user_data",
 	"customizations": {
