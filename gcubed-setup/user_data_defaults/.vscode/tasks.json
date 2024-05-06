@@ -11,6 +11,22 @@
             "isBackground": true,
             "group": "none",
             "problemMatcher": []
+        },
+        {
+            "label": "Auto-open error message file.",
+            "type": "shell",
+            "command": "code error-message.md",
+            "runOptions": {
+                "runOn": "folderOpen",
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false,
+            }
         }
     ]
 }
