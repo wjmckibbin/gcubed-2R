@@ -22,6 +22,28 @@
 			"extensions": [
 				"mechatroner.rainbow-csv"
 			]
+		},
+		"codespaces": {
+			"repositories": {
+				"McKibbin-Software-Group/gcubed-2R": {
+					"permissions": {
+						"Metadata": "read",
+						"contents": "read"
+					}
+				},
+				"McKibbin-Software-Group/gcubed-2R-prerequisites": {
+					"permissions": {
+						"Metadata": "read",
+						"contents": "read"
+					}
+				},
+				"McKibbin-Software-Group/gcubed-sym-source": {
+					"permissions": {
+						"Metadata": "read",
+						"contents": "read"
+					}
+				}
+			}
 		}
 	} 
 	,
