@@ -1,0 +1,17 @@
+# Exclude contents of userdata as this will be their own repo
+workspace/*
+!workspace/.vscode
+!workspace/user_data
+workspace/user_data/*
+!workspace/user_data/.placeholder_semaphore_for_user_data_do_not_remove
+
+# MACOS generated files #
+#########################
+*.DS_Store
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
