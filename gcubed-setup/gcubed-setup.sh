@@ -30,8 +30,8 @@ do
     esac
 done
 
-main_account_page=${GITHUB_SERVER_URL}/${main_account_name}
-parent_repository="${main_account_page}/${GITHUB_REPOSITORY}"
+main_account_page="${GITHUB_SERVER_URL}/${main_account_name}"
+parent_repository="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
 user_data_repository="${GITHUB_SERVER_URL}/${GITHUB_USER}/${data_repository_common_name}"
 
 prereq_temp_directory="${temp_directory}/$(directory_from_repo_url $prereq_repository)"
@@ -91,8 +91,8 @@ cat << EOF > "${user_data_directory}/error-message.md"
 
 ### Instructions for doing all of this can be found at ${main_account_page}/gcubed-2R-user-documentation#clone-data-repo
 EOF
-    /usr/local/bin/code "${user_data_directory}/error-message.md"
-    exit 1
+    # /usr/local/bin/code "${user_data_directory}/error-message.md"
+    exit
 fi
 
 # Looks like we have local user data, so start setting up...
