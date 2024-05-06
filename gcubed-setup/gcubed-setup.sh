@@ -71,7 +71,7 @@ echo "Looking for user data repository at: ${user_data_repository}"
 GIT_TERMINAL_PROMPT=0 git ls-remote ${user_data_repository} HEAD
 if [ $? -ne 0 ]; then 
     echo "Error - repo not available at ${user_data_repository}"
-cat << EOF > "${user_data_directory}/error-message.md"
+cat << EOF > "${user_data_directory}/README.md"
 # ERROR!
 
 ## User data repository not available at ${user_data_repository}!
