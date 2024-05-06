@@ -82,12 +82,13 @@ cat << EOF > "${user_data_directory}/error-message.md"
 
 ### to your own github repository at https://github.com/${GITHUB_USER}
 
-### NOTE: **STOP & DELETE THIS DEVCONTAINER NOW**
-### NOTE: **CLOSE THIS WINDOW**
-### NOTE: **REOPEN THE MAIN REPOSITORY AT ${parent_repository}**
-### NOTE: **PRESS THE "CODE" BUTTON, SELECT "CODESPACES" TAB
-### NOTE: **AND DELETE THIS CODESPACE.**
-### NOTE: **ONLY RE-CREATE THIS CODESPACE ONCE YOUR DATA REPO IS SET UP!**
+### NOTE:   
+###       **STOP & DELETE THIS DEVCONTAINER NOW**
+###       **CLOSE THIS WINDOW**
+###       **REOPEN THE MAIN REPOSITORY AT ${parent_repository}**
+###       **PRESS THE "CODE" BUTTON, SELECT "CODESPACES" TAB
+###       **AND DELETE THIS CODESPACE.**
+###       **ONLY RE-CREATE THIS CODESPACE ONCE YOUR DATA REPO IS SET UP!**
 
 ### Instructions for doing all of this can be found at ${main_account_page}/gcubed-2R-user-documentation#clone-data-repo
 EOF
