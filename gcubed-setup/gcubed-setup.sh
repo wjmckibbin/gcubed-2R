@@ -30,7 +30,8 @@ do
     esac
 done
 
-main_repository=${GITHUB_SERVER_URL}/${main_account_name}
+main_account_page=${GITHUB_SERVER_URL}/${main_account_name}
+parent_repository="${main_account_page}/${GITHUB_REPOSITORY}"
 user_data_repository="${GITHUB_SERVER_URL}/${GITHUB_USER}/${data_repository_common_name}"
 
 prereq_temp_directory="${temp_directory}/$(directory_from_repo_url $prereq_repository)"
@@ -44,7 +45,8 @@ echo -e "Machine info: $(uname -a)\n"
 echo "Current directory: ${PWD}"
 echo -e "In codespace: ${CODESPACES}\n"
 echo "Main account name: ${main_account_name}"
-echo "Main repository: ${main_repository}"
+echo "Main account page: ${main_account_page}"
+echo "Parent repository: ${parent_repository}"
 echo -e "Data repository common name: ${data_repository_common_name}\n"
 echo "User data defaults source directory: ${user_data_defaults_directory}"
 echo "Temp directory: ${temp_directory}"
@@ -76,13 +78,18 @@ cat << EOF > "${user_data_directory}/error-message.md"
 
 ### Please ensure that you have cloned a copy of the sample data repository
 
-### from ${main_repository}/${data_repository_common_name}
+### from ${main_account_page}/${data_repository_common_name}
 
 ### to your own github repository at https://github.com/${GITHUB_USER}
 
-### NOTE: **YOU MUST THEN RECREATE THIS DEVCONTAINER!!**
+### NOTE: **STOP & DELETE THIS DEVCONTAINER NOW**
+### NOTE: **CLOSE THIS WINDOW**
+### NOTE: **REOPEN THE MAIN REPOSITORY AT ${parent_repository}**
+### NOTE: **PRESS THE "CODE" BUTTON, SELECT "CODESPACES" TAB
+### NOTE: **AND DELETE THIS CODESPACE.**
+### NOTE: **ONLY RE-CREATE THIS CODESPACE ONCE YOUR DATA REPO IS SET UP!**
 
-### Instructions for doing all of this can be found at https://github.com/McKibbin-Software-Group/gcubed-2R-user-documentation#clone-data-repo
+### Instructions for doing all of this can be found at ${main_account_page}/gcubed-2R-user-documentation#clone-data-repo
 EOF
     /usr/local/bin/code "${user_data_directory}/error-message.md"
     exit 1
