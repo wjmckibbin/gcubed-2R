@@ -68,9 +68,9 @@ echo "**************************************************************************
 # First check for availability of user data
 enter_directory "${user_data_directory}"
 
-echo "Adding github.com to known hosts"
-# if [ ! "$(ssh-keygen -F github.com)" ]; then ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null; fi
-ssh-keyscan github.com > ~/.ssh/known_hosts 2>/dev/null
+# echo "Adding github.com to known hosts"
+# # if [ ! "$(ssh-keygen -F github.com)" ]; then ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null; fi
+# ssh-keyscan github.com > ~/.ssh/known_hosts 2>/dev/null
 
 echo "Looking for user data repository at: ${user_data_repository}"
 
