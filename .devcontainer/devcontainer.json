@@ -8,12 +8,15 @@
 	// 	"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind"
 	// ],
 	// "workspaceMount": "source=${localWorkspaceFolder}/workspace/user_data,target=/user_data,type=bind",
-	"workspaceFolder":"${containerWorkspaceFolder}/user_data",
+	// "workspaceFolder":"${containerWorkspaceFolder}/user_data",
+	"containerEnv": {
+		"MAPPING_FOLDER": "${containerWorkspaceFolder}"
+	},
 	"customizations": {
 		"vscode": {
 			"settings": {
 				"terminal.integrated.inheritEnv": true,
-				"terminal.integrated.cwd": "${containerWorkspaceFolder}/user_data",
+				// "terminal.integrated.cwd": "${containerWorkspaceFolder}/user_data",
 				"python.terminal.executeInFileDir": false,
 				"telemetry.telemetryLevel": "off",
 				"workbench.startupEditor": "none",
