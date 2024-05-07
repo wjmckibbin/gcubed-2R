@@ -31,29 +31,29 @@
 			"extensions": [
 				"mechatroner.rainbow-csv"
 			]
-		},
-		"codespaces": {
-			"repositories": {
-				"McKibbin-Software-Group/gcubed-2R": {
-					"permissions": {
-						"Metadata": "read",
-						"contents": "read"
-					}
-				},
-				"McKibbin-Software-Group/gcubed-2R-prerequisites": {
-					"permissions": {
-						"Metadata": "read",
-						"contents": "read"
-					}
-				},
-				"McKibbin-Software-Group/gcubed-sym-source": {
-					"permissions": {
-						"Metadata": "read",
-						"contents": "read"
-					}
-				}
-			}
 		}
+		// "codespaces": {
+		// 	"repositories": {
+		// 		"McKibbin-Software-Group/gcubed-2R": {
+		// 			"permissions": {
+		// 				"Metadata": "read",
+		// 				"contents": "read"
+		// 			}
+		// 		},
+		// 		"McKibbin-Software-Group/gcubed-2R-prerequisites": {
+		// 			"permissions": {
+		// 				"Metadata": "read",
+		// 				"contents": "read"
+		// 			}
+		// 		},
+		// 		"McKibbin-Software-Group/gcubed-sym-source": {
+		// 			"permissions": {
+		// 				"Metadata": "read",
+		// 				"contents": "read"
+		// 			}
+		// 		}
+		// 	}
+		// }
 	} 
 	,
 	"onCreateCommand": "/gcubed-setup/gcubed-setup.sh -u \"/gcubed-setup/user_data_defaults\" -v \"/workspace/user_data\" -t \"/gcubed-setup/temp\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
