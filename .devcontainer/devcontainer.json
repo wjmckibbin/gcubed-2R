@@ -16,7 +16,7 @@
 		"vscode": {
 			"settings": {
 				"terminal.integrated.inheritEnv": true,
-				// "terminal.integrated.cwd": "${containerWorkspaceFolder}/user_data",
+				"terminal.integrated.cwd": "${containerWorkspaceFolder}/user_data",
 				"python.terminal.executeInFileDir": false,
 				"telemetry.telemetryLevel": "off",
 				"workbench.startupEditor": "none",
