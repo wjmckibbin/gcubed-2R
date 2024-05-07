@@ -21,11 +21,25 @@
 				"workbench.colorTheme": "Default Dark Modern",
 				"workbench.editorAssociations": { 
 					"*.md": "vscode.markdown.preview.editor" 
+				},
+				"actionButtons": {
+					"reloadButton": null,
+					"commands": [
+						{
+							"name": "$(rocket) Launch Graph Viewer",
+							"color": "green",
+							"tooltip": "Launch the graph viewer server process & open a new browser window",
+							"command": "python -m gcubed.graphics.hypercube",
+							"useVsCodeApi": false,
+							"singleInstance": true
+						}
+					]
 				}
 			},
 			"extensions": [
 				"mechatroner.rainbow-csv",
-				"ms-python.black-formatter"
+				"ms-python.black-formatter",
+				"seunlanlege.action-buttons"
 			]
 		}
 	} 
