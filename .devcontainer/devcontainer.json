@@ -1,20 +1,12 @@
 {
-	"name": "G-Cubed 2R",
-	"build": {
+	"name": "G-Cubed 2R"
+	, "build": {
 		"context": "..",
 		"dockerfile": "./Dockerfile"
-	},
-	// "mounts": [
-	// 	"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind"
-	// ],
-	// "workspaceMount": "source=${localWorkspaceFolder}/workspace/user_data,target=/user_data,type=bind",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-	"workspaceFolder": "/workspace/user_data",
-	// "workspaceFolder":"${containerWorkspaceFolder}/user_data",
-	"containerEnv": {
-		"MAPPING_FOLDER": "${containerWorkspaceFolder}"
-	},
-	"customizations": {
+	}
+	, "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind"
+	, "workspaceFolder": "/workspace/user_data"
+	, "customizations": {
 		"vscode": {
 			"settings": {
 				"git.openRepositoryInParentFolders": "always",
@@ -32,31 +24,6 @@
 				"mechatroner.rainbow-csv"
 			]
 		}
-		// "codespaces": {
-		// 	"repositories": {
-		// 		"McKibbin-Software-Group/gcubed-2R": {
-		// 			"permissions": {
-		// 				"Metadata": "read",
-		// 				"contents": "read"
-		// 			}
-		// 		},
-		// 		"McKibbin-Software-Group/gcubed-2R-prerequisites": {
-		// 			"permissions": {
-		// 				"Metadata": "read",
-		// 				"contents": "read"
-		// 			}
-		// 		},
-		// 		"McKibbin-Software-Group/gcubed-sym-source": {
-		// 			"permissions": {
-		// 				"Metadata": "read",
-		// 				"contents": "read"
-		// 			}
-		// 		}
-		// 	}
-		// }
 	} 
-	,
-	"onCreateCommand": "/gcubed-setup/gcubed-setup.sh -u \"/gcubed-setup/user_data_defaults\" -v \"/workspace/user_data\" -t \"/gcubed-setup/temp\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
+	, "onCreateCommand": "/gcubed-setup/gcubed-setup.sh -u \"/gcubed-setup/user_data_defaults\" -v \"/workspace/user_data\" -t \"/gcubed-setup/temp\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
 }
-
-
