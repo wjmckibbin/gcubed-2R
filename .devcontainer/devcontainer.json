@@ -9,6 +9,9 @@
 	, "customizations": {
 		"vscode": {
 			"settings": {
+				"python.analysis.diagnosticSeverityOverrides": {
+					"reportMissingImports": "none"
+				},
 				"git.openRepositoryInParentFolders": "always",
 				"terminal.integrated.inheritEnv": true,
 				"terminal.integrated.cwd": "/workspace/user_data",
