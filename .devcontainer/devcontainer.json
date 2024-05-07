@@ -8,12 +8,12 @@
 	// 	"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,readonly,type=bind"
 	// ],
 	// "workspaceMount": "source=${localWorkspaceFolder}/workspace/user_data,target=/user_data,type=bind",
-	"workspaceFolder":"/workspace/user_data",
+	"workspaceFolder":"user_data",
 	"customizations": {
 		"vscode": {
 			"settings": {
 				"terminal.integrated.inheritEnv": true,
-				"terminal.integrated.cwd": "/workspace/user_data",
+				"terminal.integrated.cwd": "user_data",
 				"python.terminal.executeInFileDir": false,
 				"telemetry.telemetryLevel": "off",
 				"workbench.startupEditor": "none",
@@ -50,5 +50,5 @@
 		}
 	} 
 	,
-	"onCreateCommand": "sudo chown -R vscode:root /workspace/user_data && /gcubed-setup/gcubed-setup.sh -u \"/gcubed-setup/user_data_defaults\" -v \"/user_data\" -t \"/gcubed-setup/temp\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
+	"onCreateCommand": "/gcubed-setup/gcubed-setup.sh -u \"/gcubed-setup/user_data_defaults\" -v \"/user_data\" -t \"/gcubed-setup/temp\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
 }
