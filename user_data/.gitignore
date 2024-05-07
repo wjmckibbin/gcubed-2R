@@ -36,7 +36,6 @@ __pycache__
 
 
 # GCS Visual Studio Code configuration information
-.vscode
 .VSCodeCounter
 
 # R project for graphics
