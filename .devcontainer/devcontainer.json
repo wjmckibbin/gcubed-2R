@@ -50,5 +50,5 @@
 		}
 	} 
 	,
-	"onCreateCommand": "sudo chown -R vscode:root /user_data && /gcubed-setup/gcubed-setup.sh -a \"McKibbin-Software-Group\" -u \"/gcubed-setup/user_data_defaults\" -v \"/user_data\" -t \"/gcubed-setup/temp\" -d \"gcubed-2R-user-data\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
+	"onCreateCommand": "sudo chown -R vscode:root /user_data && /gcubed-setup/gcubed-setup.sh -u \"/gcubed-setup/user_data_defaults\" -v \"/user_data\" -t \"/gcubed-setup/temp\" -p \"https://github.com/McKibbin-Software-Group/gcubed-2R-prerequisites.git\" -s \"https://github.com/McKibbin-Software-Group/gcubed-sym-source.git\""
 }
