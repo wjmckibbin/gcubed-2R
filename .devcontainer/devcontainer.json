@@ -9,6 +9,7 @@
 	, "customizations": {
 		"vscode": {
 			"settings": {
+				"editor.defaultFormatter": "ms-python.black-formatter",
 				"python.analysis.diagnosticSeverityOverrides": {
 					"reportMissingImports": "none"
 				},
