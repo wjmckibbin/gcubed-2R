@@ -37,6 +37,8 @@
 				}
 			},
 			"extensions": [
+				"mhutchie.git-graph",
+				"ms-vsliveshare.vsliveshare",
 				"mechatroner.rainbow-csv",
 				"ms-python.black-formatter",
 				"seunlanlege.action-buttons"
