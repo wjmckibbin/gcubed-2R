@@ -52,7 +52,7 @@ Sets:
 
    goods_m
       Base set: goods
-      non-energy goods 
+      material goods 
          g02
 
    goods_o
@@ -90,16 +90,6 @@ Sets:
       sectors with standard treatment 
          a01,a02
 
-   sector_a01
-      Base set: self
-      energy sector 
-         a01
-
-   sector_a02
-      Base set: self
-      non-energy sector 
-         a02
-
    sector_YY
       Base set: self
       industrial capital sector 
@@ -114,6 +104,16 @@ Sets:
       Base set: self
       sectors other than those producing industrial or household capital 
          a01,a02
+
+   sectors_e
+      Base set: self
+      energy sector 
+         a01
+
+   sectors_n
+      Base set: self
+      non-energy sector 
+         a02
 
    time
       Base set: self

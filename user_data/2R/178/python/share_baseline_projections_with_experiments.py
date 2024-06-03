@@ -59,7 +59,10 @@ for experiment_script in experiment_scripts:
     if not os.path.exists(experiment_results_folder):
         os.makedirs(experiment_results_folder)
     for pickle_file in pickle_files:
-        os.symlink(
-            os.path.join(baseline_results_folder, pickle_file),
-            os.path.join(experiment_results_folder, pickle_file),
-        )
+
+        # Check for the existence of each pickly file in the experiment results folder and if the file is not in that folder then create a symbolic link
+        if not os.path.exists(os.path.join(experiment_results_folder, pickle_file)):
+            os.symlink(
+                os.path.join(baseline_results_folder, pickle_file),
+                os.path.join(experiment_results_folder, pickle_file),
+            )

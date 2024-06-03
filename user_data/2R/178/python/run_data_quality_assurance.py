@@ -2,7 +2,6 @@
 Run the baseline but only resolve the model when needed.
 """
 
-from email.mime import base
 import os
 import pickle
 import logging
@@ -14,7 +13,7 @@ from gcubed.projections.baseline_projections import BaselineProjections
 from gcubed.linearisation.solved_model import SolvedModel
 from gcubed.model_configuration import ModelConfiguration
 from gcubed.sym_data import SymData
-from model_constants import CONFIGURATION_FILE
+from model_constants import CONFIGURATION, EXPERIMENT_RESULTS_FOLDER
 
 # -------------------------------------------------------------------------------
 # Configuration details start here
@@ -31,67 +30,21 @@ start_from_neutral_real_interest_rate: bool = True
 # -------------------------------------------------------------------------------
 # Configuration details end here
 # -------------------------------------------------------------------------------
-
-# Configure the output options for numpy matrices.
-np.set_printoptions(suppress=True, linewidth=10000)
-np.set_printoptions(formatter={"float": lambda x: "{0:0.6f}".format(x)})
-
-print("Loading model config")
-# Create the model configuration just so we can get the model version and build.
-configuration: ModelConfiguration = ModelConfiguration(
-    configuration_file=CONFIGURATION_FILE,
+# Determine where the results will be saved.
+results_folder: str = EXPERIMENT_RESULTS_FOLDER(
+    experiment_script_name=os.path.basename(__file__)
 )
-
-# Get the timestamp for the results
-timestamp: str = gcubed.now()
-
-# Initialise the run
-try:
-    results_directory: str = os.path.join(
-        os.getcwd(),
-        "results",
-        configuration.version,
-        configuration.build,
-        f"{os.path.splitext(os.path.basename(__file__))[0]}",
-    )
-    if not os.path.exists(results_directory):
-        os.makedirs(results_directory)
-    logging.info(f"Created results directory {results_directory}")
-except Exception as e:
-    logging.error(f"Could not create results directory {results_directory}")
-    raise e
-
-# Create the results directory if it does not exist
-if not os.path.exists(results_directory):
-    os.makedirs(results_directory)
-
-# Configure the logging system
-formatter = logging.Formatter(
-    "%(asctime)s - %(levelname)s - %(filename)s - Line:%(lineno)d - %(message)s"
-)
-logging.getLogger().handlers.clear()
-logging.getLogger().setLevel(logging.DEBUG)
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.DEBUG)
-stream_handler.setFormatter(formatter)
-logging.getLogger().addHandler(stream_handler)
-log_file: str = os.path.join(results_directory, "run.log")
-file_handler = logging.FileHandler(log_file)
-file_handler.setLevel(logging.DEBUG)  # Set the level to DEBUG to capture all messages
-file_handler.setFormatter(formatter)
-logging.getLogger().addHandler(file_handler)
-logging.info(f"Saving results and logs to {results_directory}.")
 
 # Load or create the solved model first
 solved_model: SolvedModel = None
-solved_model_pickle_file: str = os.path.join(results_directory, "solved_model.pickle")
+solved_model_pickle_file: str = os.path.join(results_folder, "solved_model.pickle")
 if os.path.exists(solved_model_pickle_file) and using_solved_model_if_available:
     logging.info(f"Loading previously solved model from {solved_model_pickle_file}")
     with open(solved_model_pickle_file, "rb") as file:
         solved_model: SolvedModel = pickle.load(file)
 
 if not (solved_model and isinstance(solved_model, SolvedModel)):
-    model: Model = Model(configuration=configuration)
+    model: Model = Model(configuration=CONFIGURATION)
     solved_model: SolvedModel = SolvedModel(model=model)
     with open(solved_model_pickle_file, "wb") as file:
         pickle.dump(solved_model, file)
@@ -102,7 +55,7 @@ baseline_projections: BaselineProjections = BaselineProjections(
     start_from_neutral_real_interest_rate=start_from_neutral_real_interest_rate,
 )
 baseline_projections_pickle_file: str = os.path.join(
-    results_directory, "baseline_projections.pickle"
+    results_folder, "baseline_projections.pickle"
 )
 
 
@@ -157,18 +110,18 @@ def check_equality(a: pd.DataFrame, b: pd.DataFrame, atol=1e-4, rtol=1e-4) -> bo
 
     # Vertically concatenate the a and b DataFrames.
     combined = pd.concat([a, b], axis=0)
-    combined.to_csv(os.path.join(results_directory, f"{a_prefix}_vs_{b_prefix}.csv"))
+    combined.to_csv(os.path.join(results_folder, f"{a_prefix}_vs_{b_prefix}.csv"))
 
     return False
 
 
 # Access the combined database and database baseline projections.
 baseline_projections.annotated_combined_database_and_projections.to_csv(
-    os.path.join(results_directory, "combined_database_and_projections.csv")
+    os.path.join(results_folder, "combined_database_and_projections.csv")
 )
 
 baseline_projections.charting_projections.to_csv(
-    os.path.join(results_directory, "baseline_projections.csv")
+    os.path.join(results_folder, "baseline_projections.csv")
 )
 
 data: pd.DataFrame = baseline_projections.combined_database_and_projections
@@ -192,242 +145,242 @@ t_years: list[str] = t_years[: last_year_index + 1]
 t_plus_1_years: list[str] = t_plus_1_years[: last_year_index + 1]
 t_minus_1_years: list[str] = t_minus_1_years[: last_year_index + 1]
 
-# # Check bond accumulation
-# if (
-#     sym_data.has_variables("BOND")
-#     and sym_data.has_variables("DEFI")
-#     and sym_data.has_variables("PBAG")
-# ):
-#     labgrow: pd.DataFrame = baseline_projections.model.parameters.parameter(
-#         parameter_name="labgrow"
-#     ).transpose()
-#     BOND: pd.DataFrame = data.loc[names.startswith("BOND("), t_minus_1_years]
-#     DEFI: pd.DataFrame = data.loc[names.startswith("DEFI("), t_minus_1_years]
-#     PBAG: pd.DataFrame = data.loc[names.startswith("PBAG("), t_minus_1_years]
-#     calcBOND: pd.DataFrame = BOND.copy()
-#     # iterate over the second year to the last year:
-#     previous_year: str = None
-#     for year in t_minus_1_years:
-#         if previous_year is None:
-#             previous_year = year
-#             continue
-#         # Calculate the bond accumulation for each year.
-#         calcBOND[year] = (
-#             (calcBOND.loc[:, [previous_year]].to_numpy() * (1 - labgrow.to_numpy()))
-#             + DEFI.loc[:, [previous_year]].to_numpy()
-#             - PBAG.loc[:, [previous_year]].to_numpy()
-#         )
-#         previous_year = year
-#     calcBOND.index = BOND.index.str.replace("BOND", "calcBOND")
-#     # Get the change in the bonds from the current to the future year.
-#     check_equality(a=BOND, b=calcBOND)
+# Check bond accumulation
+if (
+    sym_data.has_variables("BOND")
+    and sym_data.has_variables("DEFI")
+    and sym_data.has_variables("PBAG")
+):
+    labgrow: pd.DataFrame = baseline_projections.model.parameters.parameter(
+        parameter_name="labgrow"
+    ).transpose()
+    BOND: pd.DataFrame = data.loc[names.startswith("BOND("), t_minus_1_years]
+    DEFI: pd.DataFrame = data.loc[names.startswith("DEFI("), t_minus_1_years]
+    PBAG: pd.DataFrame = data.loc[names.startswith("PBAG("), t_minus_1_years]
+    calcBOND: pd.DataFrame = BOND.copy()
+    # iterate over the second year to the last year:
+    previous_year: str = None
+    for year in t_minus_1_years:
+        if previous_year is None:
+            previous_year = year
+            continue
+        # Calculate the bond accumulation for each year.
+        calcBOND[year] = (
+            (calcBOND.loc[:, [previous_year]].to_numpy() * (1 - labgrow.to_numpy()))
+            + DEFI.loc[:, [previous_year]].to_numpy()
+            - PBAG.loc[:, [previous_year]].to_numpy()
+        )
+        previous_year = year
+    calcBOND.index = BOND.index.str.replace("BOND", "calcBOND")
+    # Get the change in the bonds from the current to the future year.
+    check_equality(a=BOND, b=calcBOND)
 
-# # Check capital accumulation
-# # lead(CAP)  = JNV  + (1-delta-labgrow)*CAP
-# if sym_data.has_variables("CAP") and sym_data.has_variables("JNV"):
-#     labgrow: pd.DataFrame = baseline_projections.model.parameters.parameter(
-#         parameter_name="labgrow"
-#     ).transpose()
-#     labgrow: np.array = np.tile(
-#         labgrow.to_numpy(),
-#         (baseline_projections.sym_data.non_electricity_distribution_sectors_count, 1),
-#     )
-#     delta: pd.DataFrame = baseline_projections.model.parameters.parameter(
-#         parameter_name="delta"
-#     ).transpose()
-#     delta: np.array = np.tile(
-#         delta.to_numpy(),
-#         (baseline_projections.sym_data.non_electricity_distribution_sectors_count, 1),
-#     )
-#     CAP: pd.DataFrame = data.loc[names.startswith("CAP("), t_minus_1_years]
-#     JNV: pd.DataFrame = data.loc[names.startswith("JNV("), t_minus_1_years]
-#     calcCAP: pd.DataFrame = CAP.copy()
-#     # iterate over the second year to the last year:
-#     previous_year: str = None
-#     for year in t_minus_1_years:
-#         if previous_year is None:
-#             previous_year = year
-#             continue
-#         # Calculate the capital accumulation for each year.
-#         calcCAP[year] = JNV.loc[:, [year]].to_numpy() + (
-#             (1 - delta - labgrow) * CAP.loc[:, [previous_year]].to_numpy()
-#         )
-#         previous_year = year
-#     calcCAP.index = CAP.index.str.replace("CAP", "calcCAP")
-#     check_equality(a=CAP, b=calcCAP)
+# Check capital accumulation
+# lead(CAP)  = JNV  + (1-delta-labgrow)*CAP
+if sym_data.has_variables("CAP") and sym_data.has_variables("JNV"):
+    labgrow: pd.DataFrame = baseline_projections.model.parameters.parameter(
+        parameter_name="labgrow"
+    ).transpose()
+    labgrow: np.array = np.tile(
+        labgrow.to_numpy(),
+        (baseline_projections.sym_data.non_electricity_distribution_sectors_count, 1),
+    )
+    delta: pd.DataFrame = baseline_projections.model.parameters.parameter(
+        parameter_name="delta"
+    ).transpose()
+    delta: np.array = np.tile(
+        delta.to_numpy(),
+        (baseline_projections.sym_data.non_electricity_distribution_sectors_count, 1),
+    )
+    CAP: pd.DataFrame = data.loc[names.startswith("CAP("), t_minus_1_years]
+    JNV: pd.DataFrame = data.loc[names.startswith("JNV("), t_minus_1_years]
+    calcCAP: pd.DataFrame = CAP.copy()
+    # iterate over the second year to the last year:
+    previous_year: str = None
+    for year in t_minus_1_years:
+        if previous_year is None:
+            previous_year = year
+            continue
+        # Calculate the capital accumulation for each year.
+        calcCAP[year] = JNV.loc[:, [year]].to_numpy() + (
+            (1 - delta - labgrow) * CAP.loc[:, [previous_year]].to_numpy()
+        )
+        previous_year = year
+    calcCAP.index = CAP.index.str.replace("CAP", "calcCAP")
+    check_equality(a=CAP, b=calcCAP)
 
 
-# # Check financial asset accumulation
-# if (
-#     sym_data.has_variables("ASSE")
-#     and sym_data.has_variables("CURR")
-#     and sym_data.has_variables("ABUY")
-#     and sym_data.has_variables("REXN")
-# ):
-#     ashr: pd.DataFrame = baseline_projections.model.parameters.parameter(
-#         parameter_name="ashr"
-#     ).transpose()
-#     ashr: np.array = ashr.stack().reset_index(drop=True).to_frame().to_numpy()
-#     aeye: pd.DataFrame = baseline_projections.model.parameters.parameter(
-#         parameter_name="aeye"
-#     ).transpose()
-#     aeye: np.array = aeye.stack().reset_index(drop=True).to_frame().to_numpy()
-#     labgrow: pd.DataFrame = baseline_projections.model.parameters.parameter(
-#         parameter_name="labgrow"
-#     ).transpose()
-#     labgrow: np.array = np.tile(
-#         labgrow.to_numpy(), (baseline_projections.sym_data.regions_count, 1)
-#     )
-#     ASSE: pd.DataFrame = data.loc[names.startswith("ASSE("), t_minus_1_years]
-#     CURR: pd.DataFrame = data.loc[names.startswith("CURR("), t_minus_1_years]
-#     ABUY: pd.DataFrame = data.loc[names.startswith("ABUY("), t_minus_1_years]
-#     REXN: pd.DataFrame = data.loc[names.startswith("REXN("), t_minus_1_years]
+# Check financial asset accumulation
+if (
+    sym_data.has_variables("ASSE")
+    and sym_data.has_variables("CURR")
+    and sym_data.has_variables("ABUY")
+    and sym_data.has_variables("REXN")
+):
+    ashr: pd.DataFrame = baseline_projections.model.parameters.parameter(
+        parameter_name="ashr"
+    ).transpose()
+    ashr: np.array = ashr.stack().reset_index(drop=True).to_frame().to_numpy()
+    aeye: pd.DataFrame = baseline_projections.model.parameters.parameter(
+        parameter_name="aeye"
+    ).transpose()
+    aeye: np.array = aeye.stack().reset_index(drop=True).to_frame().to_numpy()
+    labgrow: pd.DataFrame = baseline_projections.model.parameters.parameter(
+        parameter_name="labgrow"
+    ).transpose()
+    labgrow: np.array = np.tile(
+        labgrow.to_numpy(), (baseline_projections.sym_data.regions_count, 1)
+    )
+    ASSE: pd.DataFrame = data.loc[names.startswith("ASSE("), t_minus_1_years]
+    CURR: pd.DataFrame = data.loc[names.startswith("CURR("), t_minus_1_years]
+    ABUY: pd.DataFrame = data.loc[names.startswith("ABUY("), t_minus_1_years]
+    REXN: pd.DataFrame = data.loc[names.startswith("REXN("), t_minus_1_years]
 
-#     ABUY: np.array = pd.DataFrame(
-#         np.tile(ABUY.to_numpy(), (baseline_projections.sym_data.regions_count, 1))
-#     )
-#     ABUY.columns = t_minus_1_years
-#     CURR: np.array = pd.DataFrame(
-#         np.tile(CURR.to_numpy(), (baseline_projections.sym_data.regions_count, 1))
-#     )
-#     CURR.columns = t_minus_1_years
-#     REXN: np.array = pd.DataFrame(
-#         np.repeat(REXN.to_numpy(), baseline_projections.sym_data.regions_count, axis=0)
-#     )
-#     REXN.columns = t_minus_1_years
+    ABUY: np.array = pd.DataFrame(
+        np.tile(ABUY.to_numpy(), (baseline_projections.sym_data.regions_count, 1))
+    )
+    ABUY.columns = t_minus_1_years
+    CURR: np.array = pd.DataFrame(
+        np.tile(CURR.to_numpy(), (baseline_projections.sym_data.regions_count, 1))
+    )
+    CURR.columns = t_minus_1_years
+    REXN: np.array = pd.DataFrame(
+        np.repeat(REXN.to_numpy(), baseline_projections.sym_data.regions_count, axis=0)
+    )
+    REXN.columns = t_minus_1_years
 
-#     calcASSE: pd.DataFrame = ASSE.copy()
-#     # iterate over the second year to the last year:
-#     previous_year: str = None
-#     for year in t_minus_1_years:
-#         if previous_year is None:
-#             previous_year = year
-#             continue
-#         # Calculate the asset accumulation for each year.
-#         # lead(ASSE) = ASSE*( 1-labgrow(owner) )
-#         #        + ( ashr*ABUY + aeye*(CURR(owner)-ABUY) ) / exp(REXN(currency)) ;
+    calcASSE: pd.DataFrame = ASSE.copy()
+    # iterate over the second year to the last year:
+    previous_year: str = None
+    for year in t_minus_1_years:
+        if previous_year is None:
+            previous_year = year
+            continue
+        # Calculate the asset accumulation for each year.
+        # lead(ASSE) = ASSE*( 1-labgrow(owner) )
+        #        + ( ashr*ABUY + aeye*(CURR(owner)-ABUY) ) / exp(REXN(currency)) ;
 
-#         calcASSE[year] = (
-#             calcASSE.loc[:, [previous_year]].to_numpy() * (1 - labgrow)
-#         ) + (
-#             ashr * ABUY.loc[:, [previous_year]].to_numpy()
-#             + aeye
-#             * (
-#                 CURR.loc[:, [previous_year]].to_numpy()
-#                 - ABUY.loc[:, [previous_year]].to_numpy()
-#             )
-#         ) / REXN.loc[
-#             :, [previous_year]
-#         ].to_numpy()
-#         previous_year = year
-#     calcASSE.index = ASSE.index.str.replace("ASSE", "calcASSE")
+        calcASSE[year] = (
+            calcASSE.loc[:, [previous_year]].to_numpy() * (1 - labgrow)
+        ) + (
+            ashr * ABUY.loc[:, [previous_year]].to_numpy()
+            + aeye
+            * (
+                CURR.loc[:, [previous_year]].to_numpy()
+                - ABUY.loc[:, [previous_year]].to_numpy()
+            )
+        ) / REXN.loc[
+            :, [previous_year]
+        ].to_numpy()
+        previous_year = year
+    calcASSE.index = ASSE.index.str.replace("ASSE", "calcASSE")
 
-#     # Get the change in the assets from the current to the future year.
-#     check_equality(a=ASSE, b=calcASSE)
+    # Get the change in the assets from the current to the future year.
+    check_equality(a=ASSE, b=calcASSE)
 
-# # Check trade balances
+# Check trade balances
 
-# # Create the benchmark for comparison.
-# zeros: pd.DataFrame = pd.DataFrame(np.zeros((1, len(t_years))))
-# zeros.index = ["ZEROS()"]
-# zeros.columns = t_years
+# Create the benchmark for comparison.
+zeros: pd.DataFrame = pd.DataFrame(np.zeros((1, len(t_years))))
+zeros.index = ["ZEROS()"]
+zeros.columns = t_years
 
-# # Check that the TBAL variables summed across regions equal zero.
-# if sym_data.has_variables("TBAL") and sym_data.has_variables("GDPR"):
-#     TBAL: pd.DataFrame = data.loc[names.startswith("TBAL("), t_years]
-#     GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years]
-#     TBAL.loc[:, :] *= GDPR.to_numpy()
+# Check that the TBAL variables summed across regions equal zero.
+if sym_data.has_variables("TBAL") and sym_data.has_variables("GDPR"):
+    TBAL: pd.DataFrame = data.loc[names.startswith("TBAL("), t_years]
+    GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years]
+    TBAL.loc[:, :] *= GDPR.to_numpy()
 
-#     # Create a dataframe with a single row containing the column sums of TBAL.
-#     globalTBAL: pd.DataFrame = pd.DataFrame(TBAL.sum(axis=0)).transpose()
-#     globalTBAL.index = ["globalTBAL()"]
-#     # Check that the sum of the TBAL variables is zero using the check_equality function.
-#     check_equality(
-#         a=globalTBAL,
-#         b=zeros,
-#     )
+    # Create a dataframe with a single row containing the column sums of TBAL.
+    globalTBAL: pd.DataFrame = pd.DataFrame(TBAL.sum(axis=0)).transpose()
+    globalTBAL.index = ["globalTBAL()"]
+    # Check that the sum of the TBAL variables is zero using the check_equality function.
+    check_equality(
+        a=globalTBAL,
+        b=zeros,
+    )
 
-# if sym_data.has_variables("TBAU") and sym_data.has_variables("GDPR"):
-#     TBAU: pd.DataFrame = data.loc[names.startswith("TBAU("), t_years] / 100
-#     GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
-#     TBAU.loc[:, :] *= GDPR.to_numpy()
+if sym_data.has_variables("TBAU") and sym_data.has_variables("GDPR"):
+    TBAU: pd.DataFrame = data.loc[names.startswith("TBAU("), t_years] / 100
+    GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
+    TBAU.loc[:, :] *= GDPR.to_numpy()
 
-#     # Create a dataframe with a single row containing the column sums of TBAU.
-#     globalTBAU: pd.DataFrame = pd.DataFrame(TBAU.sum(axis=0)).transpose()
-#     globalTBAU.index = ["globalTBAU()"]
-#     # Check that the sum of the TBAU variables is zero using the check_equality function.
-#     check_equality(
-#         a=globalTBAU,
-#         b=zeros,
-#     )
+    # Create a dataframe with a single row containing the column sums of TBAU.
+    globalTBAU: pd.DataFrame = pd.DataFrame(TBAU.sum(axis=0)).transpose()
+    globalTBAU.index = ["globalTBAU()"]
+    # Check that the sum of the TBAU variables is zero using the check_equality function.
+    check_equality(
+        a=globalTBAU,
+        b=zeros,
+    )
 
-# # Check that the sum of the IRAS values across regions is zero.
-# if sym_data.has_variables("IRAS") and sym_data.has_variables("GDPR"):
-#     IRAS: pd.DataFrame = data.loc[names.startswith("IRAS("), t_years] / 100
-#     GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
-#     IRAS.loc[:, :] *= GDPR.to_numpy()
+# Check that the sum of the IRAS values across regions is zero.
+if sym_data.has_variables("IRAS") and sym_data.has_variables("GDPR"):
+    IRAS: pd.DataFrame = data.loc[names.startswith("IRAS("), t_years] / 100
+    GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
+    IRAS.loc[:, :] *= GDPR.to_numpy()
 
-#     # Create a dataframe with a single row containing the column sums of IRAS.
-#     globalIRAS: pd.DataFrame = pd.DataFrame(IRAS.sum(axis=0)).transpose()
-#     globalIRAS.index = ["globalIRAS()"]
-#     # Check that the sum of the IRAS variables is zero using the check_equality function.
-#     check_equality(
-#         a=globalIRAS,
-#         b=zeros,
-#     )
+    # Create a dataframe with a single row containing the column sums of IRAS.
+    globalIRAS: pd.DataFrame = pd.DataFrame(IRAS.sum(axis=0)).transpose()
+    globalIRAS.index = ["globalIRAS()"]
+    # Check that the sum of the IRAS variables is zero using the check_equality function.
+    check_equality(
+        a=globalIRAS,
+        b=zeros,
+    )
 
-# # Check that the sum of the CURR values across regions is zero
-# if sym_data.has_variables("CURR") and sym_data.has_variables("GDPR"):
-#     CURR: pd.DataFrame = data.loc[names.startswith("CURR("), t_years] / 100
-#     GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
-#     CURR.loc[:, :] *= GDPR.to_numpy()
+# Check that the sum of the CURR values across regions is zero
+if sym_data.has_variables("CURR") and sym_data.has_variables("GDPR"):
+    CURR: pd.DataFrame = data.loc[names.startswith("CURR("), t_years] / 100
+    GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
+    CURR.loc[:, :] *= GDPR.to_numpy()
 
-#     # Create a dataframe with a single row containing the column sums of CURR.
-#     globalCURR: pd.DataFrame = pd.DataFrame(CURR.sum(axis=0)).transpose()
-#     globalCURR.index = ["globalCURR()"]
-#     # Check that the sum of the CURR variables is zero using the check_equality function.
-#     check_equality(
-#         a=globalCURR,
-#         b=zeros,
-#     )
+    # Create a dataframe with a single row containing the column sums of CURR.
+    globalCURR: pd.DataFrame = pd.DataFrame(CURR.sum(axis=0)).transpose()
+    globalCURR.index = ["globalCURR()"]
+    # Check that the sum of the CURR variables is zero using the check_equality function.
+    check_equality(
+        a=globalCURR,
+        b=zeros,
+    )
 
-# # Check that the sum of the CURN values across regions is zero
-# if sym_data.has_variables("CURN") and sym_data.has_variables("GDPR"):
-#     CURN: pd.DataFrame = data.loc[names.startswith("CURN("), t_years] / 100
-#     GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
-#     CURN.loc[:, :] *= GDPR.to_numpy()
+# Check that the sum of the CURN values across regions is zero
+if sym_data.has_variables("CURN") and sym_data.has_variables("GDPR"):
+    CURN: pd.DataFrame = data.loc[names.startswith("CURN("), t_years] / 100
+    GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
+    CURN.loc[:, :] *= GDPR.to_numpy()
 
-#     # Create a dataframe with a single row containing the column sums of CURN.
-#     globalCURN: pd.DataFrame = pd.DataFrame(CURN.sum(axis=0)).transpose()
-#     globalCURN.index = ["globalCURN()"]
-#     # Check that the sum of the CURN variables is zero using the check_equality function.
-#     check_equality(
-#         a=globalCURN,
-#         b=zeros,
-#     )
+    # Create a dataframe with a single row containing the column sums of CURN.
+    globalCURN: pd.DataFrame = pd.DataFrame(CURN.sum(axis=0)).transpose()
+    globalCURN.index = ["globalCURN()"]
+    # Check that the sum of the CURN variables is zero using the check_equality function.
+    check_equality(
+        a=globalCURN,
+        b=zeros,
+    )
 
-# # Check that the sum of the EXQT values across regions equals the sum of the IMQT values across regions
-# if (
-#     sym_data.has_variables("EXQT")
-#     and sym_data.has_variables("IMQT")
-#     and sym_data.has_variables("GDPR")
-# ):
-#     EXQT: pd.DataFrame = data.loc[names.startswith("EXQT("), t_years] / 100
-#     IMQT: pd.DataFrame = data.loc[names.startswith("IMQT("), t_years] / 100
-#     GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
-#     EXQT.loc[:, :] *= GDPR.to_numpy()
-#     IMQT.loc[:, :] *= GDPR.to_numpy()
+# Check that the sum of the EXQT values across regions equals the sum of the IMQT values across regions
+if (
+    sym_data.has_variables("EXQT")
+    and sym_data.has_variables("IMQT")
+    and sym_data.has_variables("GDPR")
+):
+    EXQT: pd.DataFrame = data.loc[names.startswith("EXQT("), t_years] / 100
+    IMQT: pd.DataFrame = data.loc[names.startswith("IMQT("), t_years] / 100
+    GDPR: pd.DataFrame = data.loc[names.startswith("GDPR("), t_years] / 100
+    EXQT.loc[:, :] *= GDPR.to_numpy()
+    IMQT.loc[:, :] *= GDPR.to_numpy()
 
-#     # Create a dataframe with a single row containing the column sums of EXQT and IMQT.
-#     globalEXQT: pd.DataFrame = pd.DataFrame(EXQT.sum(axis=0)).transpose()
-#     globalIMQT: pd.DataFrame = pd.DataFrame(IMQT.sum(axis=0)).transpose()
-#     globalEXQT.index = ["globalEXQT()"]
-#     globalIMQT.index = ["globalIMQT()"]
-#     # Check that the sum of the EXQT variables equals the sum of the IMQT variables using the check_equality function.
-#     check_equality(
-#         a=globalEXQT,
-#         b=globalIMQT,
-#     )
+    # Create a dataframe with a single row containing the column sums of EXQT and IMQT.
+    globalEXQT: pd.DataFrame = pd.DataFrame(EXQT.sum(axis=0)).transpose()
+    globalIMQT: pd.DataFrame = pd.DataFrame(IMQT.sum(axis=0)).transpose()
+    globalEXQT.index = ["globalEXQT()"]
+    globalIMQT.index = ["globalIMQT()"]
+    # Check that the sum of the EXQT variables equals the sum of the IMQT variables using the check_equality function.
+    check_equality(
+        a=globalEXQT,
+        b=globalIMQT,
+    )
 
 
 # Check WAGE vs WAGG

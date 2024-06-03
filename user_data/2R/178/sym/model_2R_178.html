@@ -18,7 +18,7 @@ a:link { color:blue; } body { margin-left:2em; margin-top:2em; margin-right:2em;
 <tr><td><a id='factors'><b>factors</b></a><td>K, L, E, M<td>top tier factors of production</tr>
 <tr><td><a id='goods'><b>goods</b></a><td>g01, g02<td>all goods</tr>
 <tr><td><a id='goods_e'><b>goods_e</b></a><td>g01<td>energy goods</tr>
-<tr><td><a id='goods_m'><b>goods_m</b></a><td>g02<td>non-energy goods</tr>
+<tr><td><a id='goods_m'><b>goods_m</b></a><td>g02<td>material goods</tr>
 <tr><td><a id='goods_o'><b>goods_o</b></a><td>g01, g02<td>goods with standard treatment</tr>
 <tr><td><a id='notUSA'><b>notUSA</b></a><td>ROW<td>Rest of the World</tr>
 <tr><td><a id='orig'><b>orig</b></a><td>USA, ROW<td>alias for regions</tr>
@@ -26,11 +26,11 @@ a:link { color:blue; } body { margin-left:2em; margin-top:2em; margin-right:2em;
 <tr><td><a id='region_USA'><b>region_USA</b></a><td>USA<td>United States</tr>
 <tr><td><a id='regions'><b>regions</b></a><td>USA, ROW<td>countries and regions</tr>
 <tr><td><a id='sec_std'><b>sec_std</b></a><td>a01, a02<td>sectors with standard treatment</tr>
-<tr><td><a id='sector_a01'><b>sector_a01</b></a><td>a01<td>energy sector</tr>
-<tr><td><a id='sector_a02'><b>sector_a02</b></a><td>a02<td>non-energy sector</tr>
 <tr><td><a id='sector_YY'><b>sector_YY</b></a><td>YY<td>industrial capital sector</tr>
 <tr><td><a id='sector_ZZ'><b>sector_ZZ</b></a><td>ZZ<td>household capital sector</tr>
 <tr><td><a id='sectors'><b>sectors</b></a><td>a01, a02<td>sectors other than those producing industrial or household capital</tr>
+<tr><td><a id='sectors_e'><b>sectors_e</b></a><td>a01<td>energy sector</tr>
+<tr><td><a id='sectors_n'><b>sectors_n</b></a><td>a02<td>non-energy sector</tr>
 <tr><td><a id='time'><b>time</b></a><td>t0<td>Obsolete time set</tr>
 <tr><td><a id='varfac'><b>varfac</b></a><td>L, E, M<td>variable factors</tr>
 </table>
@@ -445,9 +445,9 @@ For <i>g3</i> in <b><a href='#goods_o'>goods_o</a></b>, <i>r1</i> in <b><a href=
 </div>
 </div>
 <a id='13'/>Equation 13: <a href='#OUP'>OUP</a><br>
-For <i>r1</i> in <b><a href='#regions'>regions</a></b>, <i>s5</i> in <b><a href='#sectors'>sectors</a></b> (4 total):<br>
+For <i>r1</i> in <b><a href='#regions'>regions</a></b>, <i>s3</i> in <b><a href='#sectors'>sectors</a></b> (4 total):<br>
 <div class="eblock">
-<div class="eqn"> \[ \href{#OUP}{OUP(s5,r1)} = \sum_{g \; \text{in} \; \href{#goods}{goods}} { \left(\href{#makeinv}{makeinv(g,s5,r1)}*\href{#OUG}{OUG(g,r1)}\right) } \]
+<div class="eqn"> \[ \href{#OUP}{OUP(s3,r1)} = \sum_{g \; \text{in} \; \href{#goods}{goods}} { \left(\href{#makeinv}{makeinv(g,s3,r1)}*\href{#OUG}{OUG(g,r1)}\right) } \]
 </div>
 </div>
 <a id='14'/>Equation 14: <a href='#LAB'>LAB</a><br>
@@ -643,7 +643,7 @@ For <i>g</i> in <b><a href='#goods'>goods</a></b>, <i>r1</i> in <b><a href='#reg
 <div class="eblock">
 <div class="eqn"> \[ \href{#PRD}{PRD(g,r1)} = ln{ \left( 
         exp{ \left( 
-        \sum_{s5 \; \text{in} \; \href{#sectors}{sectors}} { \left(\href{#makeinv}{makeinv(g,s5,r1)}*\href{#PRP}{PRP(s5,r1)}\right) }\right) } 
+        \sum_{s3 \; \text{in} \; \href{#sectors}{sectors}} { \left(\href{#makeinv}{makeinv(g,s3,r1)}*\href{#PRP}{PRP(s3,r1)}\right) }\right) } 
         +\href{#carcoef}{carcoef(g,r1)}*\href{#TCP}{TCP(g,r1)} 
         +\href{#btucoef}{btucoef(g,r1)}*\href{#TBFD}{TBFD(r1)}\right) } \]
 </div>

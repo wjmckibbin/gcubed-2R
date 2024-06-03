@@ -1,15 +1,10 @@
-"""
-This module contains the custom 
-class for parameter calibration of model 2R 178.
-"""
-
 from gcubed.model_parameters.parameters import Parameters
 from gcubed.data.database import Database
 
 
 class Parameters2R178(Parameters):
     """
-    This class does customised parameter calibration for model 2R 170 logv7.
+    This class does customised parameter calibration for model 2R 178.
     """
 
     def __init__(self, database: Database, base_year: int) -> None:
@@ -28,10 +23,3 @@ class Parameters2R178(Parameters):
 
         """
         super().__init__(database=database, base_year=base_year)
-
-        # Required statements in all final subclasses of the parameter class.
-        self._parameter_values.index = self._parameter_full_names
-        self.validate()
-
-    def validate(self):
-        super().validate()
