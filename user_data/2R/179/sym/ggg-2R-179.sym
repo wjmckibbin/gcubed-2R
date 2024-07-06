@@ -1,0 +1,9 @@
+//  G-Cubed model definition file
+
+#include ggg-sets.sym                           // regions and sectors
+
+// Stable manifold and no problems with price index projections
+//#include log/ggg-configuration.sym                // Log model
+
+// Stable manifold and no problems with price index projections
+#include linear/ggg-configuration.sym             // Linear model

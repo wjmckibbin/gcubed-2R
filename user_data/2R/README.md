@@ -2,6 +2,10 @@
 
 2 Region / 2 sector symmetric model of the USA and the Rest of the World. The model is symmetric in the sense that the rest of the world has been altered to match the USA.
 
+## Model stability
+
+Only the linear version of the model is stable. The log version of the model has 4 explosive roots (outside the unit circle).
+
 ## Variable types
 
 end = normal endogenous
@@ -13,17 +17,22 @@ exo = exogenous
 
 ## Variable units
 
-pct      = log (% in gauss)
-del      = level (D in gauss)
-gdp      = normalized by gdp (%GDP in gauss)
-usgdp    = normalized by US gdp (%USGDP in gauss)
-$US      = dollar per unit ($/unit in gauss)
-btu      = quadrillion btu
-mmt      = million metric tons
-btugdp   = btu normailzed by GDP
-mmtgdp   = million metric tons normalized by GDP
-btuusgdp = btu normalized by US GDP
-mmtusgdp = million metric tons normalized by US GDP
+* idx      = index (100 in base year in the database)
+* rate     = percentage (e.g. tax rate)
+* del      = percentage points (e.g. shock to target inflation rate)
+* gdp      = normalized by local gdp (numerator and denominator both expressed in USD)
+* usgdp    = normalized by US gdp (numerator and denominator both expressed in USD)
+* dollar   = US dollars (e.g. dollar tax on Carbon emissions)
+* btu      = quadrillion btu
+* mmt      = million metric tons
+* gwh      = Gigawatt hours
+* btugdp   = btu normalized by local gdp valued in USD
+* mmtgdp   = mmt normalized by local gdp valued in USD
+* gwhgdp   = Gigawatt hours normalized by local gdp valued in USD
+* btuusgdp = btu normalized by US gdp valued in USD
+* mmtusgdp = mmt normalized by US gdp valued in USD
+* nomusdbillion = nominal USD billion
+* realusdbillion = real USD billion
 
 ## Historical build log through to model build 164
 
