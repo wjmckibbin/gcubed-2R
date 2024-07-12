@@ -1,2 +1,3 @@
 name,data,event_year,description
-USA productivity growth shock,adjustments.csv,2019,Shock to labour enhancing productivity growth in the USA
+Increased inflation target,adjustments_1.csv,2019,Permanent increase in inflation target.
+Policy reversal,adjustments_2.csv,2026,Reversal of change in inflation target.

@@ -415,7 +415,7 @@ variable PGDP(regions)            'GDP implicit price deflator'       end,idx,lo
 
 variable INAS(regions)            'nominal USD net interest payments on foreign assets'  end,gdp ;
 variable INCM(regions)            'after tax household income'                   end,gdp ;
-variable INFP(regions)            'aggregate output price inflation'                       end,pct ;
+variable INFP(regions)            'output price inflation'                       end,pct ;
 variable INTN(regions)            'interest rate, short (policy), nominal'       stl,pct ;
 variable INTR(regions)            'risk adjusted interest rate, short-run, real' end,pct ;
 variable INTF(regions)            'risk free interest rate, short-run, real'     end,pct ;
@@ -832,7 +832,7 @@ PRKZ = PRCT + ln( delta_oH(k)*CONP/CAPZ )/sigma_oH + SHYZ*(sigma_oH-1)/sigma_oH 
 lead(WAGE) = WAGE 
            + wage_p*(lead(PRCT) + PRXX-PRCT) 
            + (1-wage_p)*(PRCT-PRCL) 
-           + wage_q*ln(LABO) ;
+           + wage_q * ( ln(LABO) - ln(LABX) ) ;
 
 // Wage paid for labor by government (on exogenous labor used by government)
 

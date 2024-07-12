@@ -26,18 +26,12 @@ EXPERIMENT_1: str = "experiment_1/design.csv"
 # Permanent increase to inflation target in the USA.
 EXPERIMENT_2: str = "experiment_2/design.csv"
 
-# Shock to labour enhancing productivity growth in the USA.
+# Unexpected reversal of permanent increase to inflation target in the USA.
 EXPERIMENT_3: str = "experiment_3/design.csv"
 
-# Investment tax credit experiments comparing two alternative termination dates for the policy
+# Anticipated and unanticipated nvestment tax credit experiment
 EXPERIMENT_4_A: str = "experiment_4/design_A.csv"
 EXPERIMENT_4_B: str = "experiment_4/design_B.csv"
-
-# Temporary total factor productivity shock in 2021 anticipated in 2019.
-EXPERIMENT_5: str = "experiment_5/design.csv"
-
-# Permanent labour enhancing productivity shock in the rest of the world.
-EXPERIMENT_6: str = "experiment_6/design.csv"
 
 # --------------------------------------------------------------------------------------------
 # Changes are unlikely to be required after this line.

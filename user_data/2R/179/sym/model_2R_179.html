@@ -95,8 +95,8 @@ a:link { color:blue; } body { margin-left:2em; margin-top:2em; margin-right:2em;
 <tr><td><a id='INAS'><b>INAS</b></a><td><a href='#regions'>regions</a><td>nominal USD net interest payments on foreign assets<td>end,gdp<td><a href='#71'>71</a><td><a href='#92'>92</a></tr>
 <tr><td><a id='INCM'><b>INCM</b></a><td><a href='#regions'>regions</a><td>after tax household income<td>end,gdp,logged<td><a href='#68'>68</a><td><a href='#69'>69</a></tr>
 <tr><td><a id='INFCL'><b>INFCL</b></a><td><a href='#regions'>regions</a><td>household materials inflation rate<td>end,pct<td><a href='#114'>114</a><td><a href='#118'>118</a></tr>
-<tr><td><a id='INFL'><b>INFL</b></a><td><a href='#regions'>regions</a><td>aggregate consumer price inflation<td>end,pct<td><a href='#112'>112</a><td><a href='#118'>118</a></tr>
-<tr><td><a id='INFP'><b>INFP</b></a><td><a href='#regions'>regions</a><td>aggregate output price inflation<td>end,pct<td><a href='#85'>85</a><td><a href='#118'>118</a></tr>
+<tr><td><a id='INFL'><b>INFL</b></a><td><a href='#regions'>regions</a><td>consumer price inflation<td>end,pct<td><a href='#112'>112</a><td><a href='#118'>118</a></tr>
+<tr><td><a id='INFP'><b>INFP</b></a><td><a href='#regions'>regions</a><td>output price inflation<td>end,pct<td><a href='#85'>85</a><td><a href='#118'>118</a></tr>
 <tr><td><a id='INFX'><b>INFX</b></a><td><a href='#regions'>regions</a><td>inflation target<td>exo,pct<td>none<td><a href='#118'>118</a></tr>
 <tr><td><a id='INS'><b>INS</b></a><td><a href='#regions'>regions</a>, <a href='#goods_o'>goods_o</a><td>shocks to aggregate investment demand<td>exo,gdp<td>none<td><a href='#116'>116</a>, <a href='#117'>117</a>, <a href='#2'>2</a>, <a href='#3'>3</a>, <a href='#88'>88</a>, <a href='#89'>89</a></tr>
 <tr><td><a id='INTF'><b>INTF</b></a><td><a href='#regions'>regions</a><td>risk free interest rate, short-run, real<td>end,pct<td><a href='#83'>83</a><td><a href='#84'>84</a></tr>
@@ -115,7 +115,7 @@ a:link { color:blue; } body { margin-left:2em; margin-top:2em; margin-right:2em;
 <tr><td><a id='JNVZ'><b>JNVZ</b></a><td><a href='#regions'>regions</a><td>installed household investment<td>end,gdp,logged<td><a href='#46'>46</a><td><a href='#40'>40</a>, <a href='#44'>44</a>, <a href='#49'>49</a></tr>
 <tr><td><a id='LAB'><b>LAB</b></a><td><a href='#sec_std'>sec_std</a>, <a href='#regions'>regions</a><td>sector demand for labor<td>end,gdp,logged<td><a href='#14'>14</a><td><a href='#128'>128</a>, <a href='#22'>22</a>, <a href='#56'>56</a>, <a href='#68'>68</a>, <a href='#95'>95</a></tr>
 <tr><td><a id='LABO'><b>LABO</b></a><td><a href='#regions'>regions</a><td>total labor demanded<td>end,gdp,logged<td><a href='#22'>22</a><td><a href='#35'>35</a></tr>
-<tr><td><a id='LABX'><b>LABX</b></a><td><a href='#regions'>regions</a><td>shock to total labor supply<td>exo,gdp<td>none<td>none</tr>
+<tr><td><a id='LABX'><b>LABX</b></a><td><a href='#regions'>regions</a><td>shock to total labor supply<td>exo,gdp<td>none<td><a href='#35'>35</a></tr>
 <tr><td><a id='LAM'><b>LAM</b></a><td><a href='#sec_std'>sec_std</a>, <a href='#regions'>regions</a><td>marginal value of an additional unit of capital<td>cos,intertemporal_constant,logged,pct<td><a href='#47'>47</a><td><a href='#47'>47</a>, <a href='#50'>50</a>, <a href='#60'>60</a></tr>
 <tr><td><a id='LAMY'><b>LAMY</b></a><td><a href='#regions'>regions</a><td>marginal value of an additional unit of capital in the raw capital sector<td>cos,logged,pct<td><a href='#48'>48</a><td><a href='#48'>48</a>, <a href='#51'>51</a>, <a href='#94'>94</a></tr>
 <tr><td><a id='LAMZ'><b>LAMZ</b></a><td><a href='#regions'>regions</a><td>marginal value of an additional unit of household capital<td>cos,logged,pct<td><a href='#49'>49</a><td><a href='#49'>49</a>, <a href='#52'>52</a>, <a href='#94'>94</a></tr>
@@ -748,7 +748,9 @@ For <i>r1</i> in <b><a href='#regions'>regions</a></b> (2 total):<br>
         -\href{#PRCT}{PRCT(r1)})} 
         +{(1-\href{#wage_p}{wage\_p(r1)})} 
         *{(\href{#PRCT}{PRCT(r1)}-\href{#PRCL}{PRCL(r1)})} 
-        +\href{#wage_q}{wage\_q(r1)}*\href{#LABO}{LABO(r1)} \]
+        +\href{#wage_q}{wage\_q(r1)} 
+        *{(\href{#LABO}{LABO(r1)} 
+        -ln{ \left(\href{#LABX}{LABX(r1)}\right) })} \]
 </div>
 </div>
 <a id='36'/>Equation 36: <a href='#WAGG'>WAGG</a><br>

@@ -4,7 +4,7 @@ SCRIPT=run_fast_baseline.py
 
 # Custom variable definitions that determine which model is run or tested
 VERSION=2R
-BUILD=178
+BUILD=179
 
 # The date and time stamp for the current run
 DATE_STAMP := $(shell date +"%Y-%m-%d %H:%M:%S")

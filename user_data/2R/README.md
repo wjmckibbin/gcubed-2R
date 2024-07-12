@@ -4,35 +4,7 @@
 
 ## Model stability
 
-Only the linear version of the model is stable. The log version of the model has 4 explosive roots (outside the unit circle).
-
-## Variable types
-
-end = normal endogenous
-ets = endogenous with lead
-cos = costate
-stl = state with lags
-sta = state
-exo = exogenous
-
-## Variable units
-
-* idx      = index (100 in base year in the database)
-* rate     = percentage (e.g. tax rate)
-* del      = percentage points (e.g. shock to target inflation rate)
-* gdp      = normalized by local gdp (numerator and denominator both expressed in USD)
-* usgdp    = normalized by US gdp (numerator and denominator both expressed in USD)
-* dollar   = US dollars (e.g. dollar tax on Carbon emissions)
-* btu      = quadrillion btu
-* mmt      = million metric tons
-* gwh      = Gigawatt hours
-* btugdp   = btu normalized by local gdp valued in USD
-* mmtgdp   = mmt normalized by local gdp valued in USD
-* gwhgdp   = Gigawatt hours normalized by local gdp valued in USD
-* btuusgdp = btu normalized by US gdp valued in USD
-* mmtusgdp = mmt normalized by US gdp valued in USD
-* nomusdbillion = nominal USD billion
-* realusdbillion = real USD billion
+The log and linear versions of this model are stable.
 
 ## Historical build log through to model build 164
 

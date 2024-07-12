@@ -4,6 +4,10 @@ This document describes model 2R build 178 which is a fork from 2R build 179.
 
 Run the model using Python G-Cubed version 3.+.
 
+## Simulation experiments
+
+[A number of different example simulation experiments](simulations/README.md) are provided with this model build.
+
 ## Changes from model 2R build 178
 
 Migrates to a new way of representing the labor productivity growth assumptions, replacing the prodmat.csv file in the data directory with 3 files:

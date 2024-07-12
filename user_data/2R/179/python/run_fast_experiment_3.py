@@ -5,6 +5,7 @@ Run the baseline but only resolve the model when needed.
 import os
 import pickle
 import logging
+import pandas as pd
 import gcubed
 import gcubed.projections
 from gcubed.model import Model
@@ -71,32 +72,57 @@ runner: SimulationRunner = SimulationRunner(
 # Run the simulation experiment.
 runner.run()
 
-# Save the raw baseline projections
+# Save all projections and deviations.
 baseline_projections: Projections = runner.baseline_projections
-baseline_projections.charting_projections.to_csv(
-    os.path.join(
-        results_folder,
-        f"{baseline_projections.name}.csv",
-    )
-)
+previous_projections: Projections = baseline_projections
+layer: int = 0
+for projections in runner.all_projections:
 
-# Save final projections
-final_projections: Projections = runner.final_projections
-final_projections.charting_projections.to_csv(
-    os.path.join(
-        results_folder,
-        f"{final_projections.name}.csv",
+    # Save the level projections
+    projections.charting_projections.to_csv(
+        os.path.join(
+            results_folder,
+            f"{layer} {projections.name} - levels.csv",
+        )
     )
-)
 
-# Calculate the deviations
-deviations = gcubed.projections.deviations(
-    new_projections=final_projections,
-    original_projections=baseline_projections,
-)
-deviations.to_csv(
-    os.path.join(
-        results_folder,
-        f"deviations of {final_projections.name} from {baseline_projections.name}.csv",
+    # If the projections are the baseline, skip the deviations
+    if projections is baseline_projections:
+        previous_projections: pd.DataFrame = projections
+        layer += 1
+        continue
+
+    # Generate deviations from the baseline
+    deviations = gcubed.projections.deviations(
+        new_projections=projections,
+        original_projections=baseline_projections,
     )
-)
+    deviations.to_csv(
+        os.path.join(
+            results_folder,
+            f"{layer} {projections.name} - deviations from baseline.csv",
+        )
+    )
+
+    # No need to compute deviations from previous layer if previous
+    # layer is the baseline projections
+    if previous_projections is baseline_projections:
+        previous_projections: pd.DataFrame = projections
+        layer += 1
+        continue
+
+    # Generate deviations from the previous simulation layer in the experiment
+    incremental_deviations = gcubed.projections.deviations(
+        new_projections=projections,
+        original_projections=previous_projections,
+    )
+    deviations.to_csv(
+        os.path.join(
+            results_folder,
+            f"{layer} {projections.name} - deviations from previous layer.csv",
+        )
+    )
+
+    # Prepare for the next iteration
+    previous_projections: pd.DataFrame = projections
+    layer += 1

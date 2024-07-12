@@ -7,7 +7,7 @@
 variable INTL(regions)            'interest rate, short-run, nominal (lagged)'   sta,pct ;
 variable PRCOL(regions)           'household price of material - lagged'         sta,idx,logged,lagged ;
 
-variable INFL(regions)            'aggregate consumer price inflation'                       end,pct ;
+variable INFL(regions)            'consumer price inflation'                       end,pct ;
 variable INFCL(regions)           'household materials inflation rate'                end,pct ;
 variable YGRO(regions)            'output growth'                                end,pct ;
 variable GNEN(regions)            'GNE, nominal'                                 end,gdp ;

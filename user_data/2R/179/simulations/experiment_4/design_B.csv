@@ -1,2 +1,2 @@
 name,data,event_year,description
-ITC cutting out in 2040,layer_B.csv,2019,Investment tax credit that cuts out in 2040.
+Unanticipated ITC,layer_B.csv,2025,Unanticipated investment tax credit from 2025 to 2030 to the non-energy sector.
