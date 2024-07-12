@@ -3,7 +3,7 @@ SCRIPT=run_fast_baseline.py
 #run_fast_experiment_1.py
 
 # Custom variable definitions that determine which model is run or tested
-VERSION=6G
+VERSION=2R
 BUILD=178
 
 # The date and time stamp for the current run
