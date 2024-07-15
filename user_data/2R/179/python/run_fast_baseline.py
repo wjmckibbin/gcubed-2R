@@ -48,6 +48,6 @@ with open(baseline_projections_pickle_file, "wb") as file:
 baseline_projections.charting_projections.to_csv(
     os.path.join(
         results_folder,
-        f"charting baseline projections.csv",
+        f"baseline projections.csv",
     )
 )
