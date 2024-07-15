@@ -1,5 +1,5 @@
 """
-Example showing how to run an experiment with multiple simulation layers.
+Simulation experiment
 """
 
 import logging

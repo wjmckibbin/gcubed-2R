@@ -1,5 +1,5 @@
 """
-Run the baseline but only resolve the model when needed.
+Simulation experiment
 """
 
 import os

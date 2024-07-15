@@ -20,18 +20,16 @@ ROOT_RESULTS_FOLDER: str = os.path.abspath(
 # Specify the name of the model configuration file (in the model root folder)
 CONFIGURATION_FILE: str = os.path.join(MODEL_FOLDER, "configuration2R179.csv")
 
-# Temporary increase to inflation target in the USA.
 EXPERIMENT_1: str = "experiment_1/design.csv"
 
-# Permanent increase to inflation target in the USA.
 EXPERIMENT_2: str = "experiment_2/design.csv"
 
-# Unexpected reversal of permanent increase to inflation target in the USA.
 EXPERIMENT_3: str = "experiment_3/design.csv"
 
-# Anticipated and unanticipated nvestment tax credit experiment
 EXPERIMENT_4_A: str = "experiment_4/design_A.csv"
 EXPERIMENT_4_B: str = "experiment_4/design_B.csv"
+
+EXPERIMENT_5: str = "experiment_5/design.csv"
 
 # --------------------------------------------------------------------------------------------
 # Changes are unlikely to be required after this line.

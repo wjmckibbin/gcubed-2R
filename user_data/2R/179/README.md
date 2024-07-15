@@ -1,6 +1,6 @@
 # Overview
 
-This document describes model 2R build 178 which is a fork from 2R build 179.
+This document describes model 2R build 179 which is a fork from 2R build 178.
 
 Run the model using Python G-Cubed version 3.+.
 

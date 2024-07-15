@@ -22,33 +22,20 @@ run_fast_baseline.py
 share_baseline_projections_with_experiments.py
 ```
 
-## A temporary increase in the USA inflation target
+## Example experiments
 
-The USA inflation target is increased by 1 percentage points (to 3.5%) for 3 years.
+Each of the following example experiments can be run using the python script with the matching experiment number. Thus, for experiment 1, run:
 
-The experiment script is `run_fast_experiment_1.py`.
+```bash
+run_fast_experiment_1.py
+```
 
-## A temporary increase in the USA inflation target
+1. [A permanent increase in the USA inflation target](experiment_1/README.md)
 
-The USA inflation target is increased by 1 percentage points (to 3.5%) permanently.
+2. [A temporary increase in the USA inflation target](experiment_2/README.md)
 
-The experiment script is `run_fast_experiment_2.py`.
+3. [Unexpected reversal of permanent increase to inflation target in the USA](experiment_3/README.md)
 
-## Unexpected reversal of permanent increase to inflation target in the USA.
+4. [Anticipation effect for an investment tax credit](experiment_4/README.md)
 
-The increase is in 2019 and it is unexpectedly reversed in 2026.
-
-The experiment script is `run_fast_experiment_3.py`.
-
-## Investment tax policy credit comparison
-
-The experiment compares an anticipated investment tax credit policy to an unanticipated investment tax credit policy.
-
-The experiment script is `run_fast_experiment_4.py`.
-
-It uses two simulation layers that differ in terms of their event year.
-
-It uses two design files, one for each simulation layer.
-
-The Python script calculates the deviations due to the anticipation effect.
-
+5. [Find potential output growth consistent with achieving target inflation](experiment_5/README.md)
