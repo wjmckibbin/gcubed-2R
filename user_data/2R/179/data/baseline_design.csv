@@ -1,2 +1,3 @@
 name,data,event_year,description
-growth and efficiency adjustments,baseline_exogenous_projections.csv,2018,"Growth and efficiency adjustments"
+growth and efficiency adjustments,baseline_exogenous_projections.csv,2018,Growth and efficiency adjustments
+growth and efficiency adjustments,custom_exogenous_projections.csv,2018,Custom adjustments to exogenous projections
