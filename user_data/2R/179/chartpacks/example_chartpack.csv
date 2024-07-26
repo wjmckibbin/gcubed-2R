@@ -1,5 +1,5 @@
 type,attributes,variable,label
-pack,start_year=2018|end_year=2100,,G-Cubed Charts
+pack,start_year=2018|end_year=2080,,G-Cubed Charts
 chart,,,
 series,,GDPR(USA),
 series,,GDPR(ROW),
