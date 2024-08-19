@@ -22,6 +22,22 @@ run_fast_baseline.py
 share_baseline_projections_with_experiments.py
 ```
 
+
+## Midterm essay experiments
+
+Before running these scripts, make sure you have done the preliminaries, described above.
+
+Also be sure to use the fiscal closure module where the deficit is determined endogenously while spending is exogenous. Check the `sym/linear/ggg-configuration.sym` file to ensure that the relevant line is uncommented (does not start with `//`):
+
+```sym
+#include linear/gggopt-fiscal-closure-deficit-endogenous-spending-exogenous.sym
+```
+
+1. [USA government spending shock 1](experiment_Fiscal_USA_1/README.md)
+
+2. [USA government spending shock 2](experiment_Fiscal_USA_2/README.md)
+
+3. [Global government spending shock 1](experiment_Fiscal_Global_1/README.md)
 ## Example experiments
 
 Each of the following example experiments can be run using the python script with the matching experiment number. Thus, for experiment 1, run:

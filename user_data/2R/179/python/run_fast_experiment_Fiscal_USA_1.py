@@ -15,7 +15,7 @@ from gcubed.runners.simulation_runner import SimulationRunner
 from model_constants import (
     CONFIGURATION,
     EXPERIMENT_RESULTS_FOLDER,
-    EXPERIMENT_FiscalAnticipated as EXPERIMENT,
+    EXPERIMENT_FISCAL_USA_1 as EXPERIMENT,
 )
 
 # Determine where the results will be saved.

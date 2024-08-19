@@ -30,9 +30,12 @@ EXPERIMENT_4_A: str = "experiment_4/design_A.csv"
 EXPERIMENT_4_B: str = "experiment_4/design_B.csv"
 
 EXPERIMENT_5: str = "experiment_5/design.csv"
-EXPERIMENT_FiscalPerm: str = "experiment_FiscalPerm/design.csv"
-EXPERIMENT_GlobalFiscalPerm: str = "experiment_GlobalFiscalPerm/design.csv"
-EXPERIMENT_FiscalAnticipated: str = "experiment_FiscalAnticipated/design.csv"
+
+# Midterm essay experiments
+
+EXPERIMENT_FISCAL_USA_1: str = "experiment_Fiscal_USA_1/design.csv"
+EXPERIMENT_FISCAL_USA_2: str = "experiment_Fiscal_USA_2/design.csv"
+EXPERIMENT_FISCAL_GLOBAL_1: str = "experiment_Fiscal_Global_1/design.csv"
 
 # --------------------------------------------------------------------------------------------
 # Changes are unlikely to be required after this line.
