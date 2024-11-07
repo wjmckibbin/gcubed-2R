@@ -32,6 +32,7 @@ EXPERIMENT_4_B: str = "experiment_4/design_B.csv"
 EXPERIMENT_5: str = "experiment_5/design.csv"
 EXPERIMENT_EXRisk: str = "experiment_EXRisk/design.csv"
 EXPERIMENT_EQRisk: str = "experiment_EQRisk/design.csv"
+EXPERIMENT_USTariff: str = "experiment_USTariff/design.csv"
 
 # Midterm essay experiments
 
